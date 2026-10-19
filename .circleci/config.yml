@@ -1,0 +1,35 @@
+
+version: 2.1
+
+jobs:
+  wake-github:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: 啟動 GitHub 盤中即時雷達
+          command: |
+            set -eu
+
+            : "${GH_TOKEN:?尚未設定 GH_TOKEN}"
+
+            echo "正在啟動 GitHub Actions..."
+
+            curl --fail-with-body --silent --show-error \
+              --retry 3 \
+              --retry-delay 5 \
+              --request POST \
+              --url "https://api.github.com/repos/dutylife/claude_real_time_stock_tracker-new/actions/workflows/main.yml/dispatches" \
+              --header "Accept: application/vnd.github+json" \
+              --header "Authorization: Bearer ${GH_TOKEN}" \
+              --header "X-GitHub-Api-Version: 2022-11-28" \
+              --header "Content-Type: application/json" \
+              --data '{"ref":"main"}'
+
+            echo "GitHub 已接受啟動請求。"
+
+workflows:
+  wake-realtime:
+    jobs:
+      - wake-github
