@@ -178,7 +178,7 @@ def send(q, m, selected, state):
         extra += f"\n ↳ 新波段：先前回檔{m['pullback']:.1f}pp"
     note = html.escape(bot.chip_note())
     message = (
-        f'🤖 <b>Claude Real Time｜MIS報價</b>\n{note}'
+        f'🤖 <b> GPT｜MIS報價</b>\n{note}'
         f'<a href="https://www.cmoney.tw/finance/{code}/stockmainkline">{code} {name}</a> {label}\n'
         f" ↳ 現價：<code>{q['price']:.2f}元</code>｜昨收漲跌：<code>{m['pct_prev']:+.2f}%</code>\n"
         f" ↳ 較開盤：<code>{m['pct_open']:+.2f}%</code>（原策略判斷基準）\n"
